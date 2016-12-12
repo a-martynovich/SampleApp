@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/a-martynovich/SampleApp/issues"
   },
-  "homepage": "https://github.com/a-martynovich/SampleApp#readme"
+  "homepage": "https://github.com/a-martynovich/SampleApp#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
