@@ -19,11 +19,14 @@
       $.ajax({
         type: "POST",
         url: "/",
-        data: formdata,
+        data: JSON.stringify(dict),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
         success: function(msg) {
           console.log('OK!');
           $('#myModal').modal({
-            
+
           });
         },
         error: function() {
@@ -35,9 +38,6 @@
   </script>
 </head>
 <body>
-
-<!-- Trigger the modal with a button -->
-<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">

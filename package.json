@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/a-martynovich/SampleApp#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.15",
+    "multer": "^1.2.0"
   }
 }
