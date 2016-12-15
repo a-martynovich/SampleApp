@@ -29,8 +29,10 @@
 
           });
         },
-        error: function() {
-          alert("failure");
+        error: function(xhr, status, err) {
+          console.log("failure!");
+          console.log(status);
+          console.log(err);
         }
       });
     });
