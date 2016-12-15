@@ -1,5 +1,9 @@
+"use strict";
+
 console.log("Web is started");
-const VERSION=3;
+
+const VERSION=3,
+      MONGO_COLLECTION='mailer';
 
 var express = require('express'),
     mongodb = require('mongodb'),
@@ -8,33 +12,34 @@ var express = require('express'),
     child_process = require('child_process');
 var app = express();
 
-app.use(express.static('public'));
-app.use(bodyParser.json());
+app
+    .use(express.static('public'))
+    .use(bodyParser.json())
+    .listen(process.env.PORT, () => {
+        console.log('Web: listening');
 
-app.listen(process.env.PORT, function () {
-    console.log('Web: listening');
+        mongodb.MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
+            console.log('Web: Mongo is connected');
+            if(err) throw err;
 
-    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
-        console.log('Web: Mongo is connected');
-        if(err) throw err;
+            app.post('/', function(req, res, next) {
+                console.log(req.body);
+                var record = Object.assign(req.body, {
+                    sent : false,
+                    attempts : 0,
+                    version : VERSION,
+                    sending : false
+                });
 
-        app.post('/', function(req, res, next) {
-            console.log(req.body);
-            var record = req.body;
-            record.sent = false;
-            record.attempts = 0;
-            record.version = VERSION;
-            record.sending = false;
+                db.collection(MONGO_COLLECTION).insert(req.body, (err, result) => {
+                    if(err) {
+                        console.error(err);
+                    }
+                    res.send(JSON.stringify({
+                        success: (err==null)
+                    }));
+                })
+            });
 
-            db.collection('mailer').insert(req.body, function(err, result) {
-                if(err) {
-                    console.error(err);
-                }
-                res.send(JSON.stringify({
-                    success: (err==null)
-                }));
-            })
         });
-
     });
-});

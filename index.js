@@ -1,3 +1,5 @@
+"use strict";
+
 // authorized emails:
 // artem.martynovich@gmail.com
 // alt.xk-6c1gf9c@yopmail.com  artem-test-app-1
